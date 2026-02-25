@@ -57,7 +57,7 @@ input {
   <button id="continueBtn" onclick="finalMessage()">Continue</button>
 </div>
 
-<audio id="bgMusic" loop>
+<audio id="bgMusic" preload="auto">
   <source src="ONLY.mp3" type="audio/mpeg">
 </audio>
   
@@ -67,22 +67,27 @@ function checkCode() {
 
   if(code === "2106") {
 
+    const music = document.getElementById("bgMusic");
+
+    // tenta tocar ANTES de esconder a tela
+    music.play().then(() => {
+      console.log("Tocando 💛");
+    }).catch(err => {
+      console.log("Erro ao tocar:", err);
+    });
+
     document.getElementById("login").style.display = "none";
 
     const secret = document.getElementById("secret");
     secret.style.display = "block";
     setTimeout(() => { secret.style.opacity = 1; }, 100);
 
-    // TOCA A MÚSICA
-    const music = document.getElementById("bgMusic");
-    music.play().catch(() => {});
-
     typeWriter();
 
   } else {
     alert("Código incorreto...");
   }
-  }
+}
   
 const text = "Tudo começou no dia 8 de agosto.\nNosso primeiro beijo foi 1 de setembro.\nE desde então... você se tornou o meu lugar favorito no mundo.";
 let i = 0;
