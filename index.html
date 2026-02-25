@@ -1,59 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
+<meta charset="UTF-8">
 <title>CODE 2206</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+
 <style>
 body {
-  background-color: #111;
-  color: white;
-  font-family: Arial, sans-serif;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at center, #1a1a1a 0%, #0d0d0d 60%, #000 100%);
+  color: #f5d67b;
   text-align: center;
+  font-family: 'Inter', sans-serif;
+  animation: fadeIn 2s ease-in;
+}
+
+.container {
+  max-width: 600px;
   padding: 40px;
 }
-.section {
-  margin: 40px 0;
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
 }
-.small {
+
+.subtitle {
   font-size: 14px;
   opacity: 0.7;
+  margin-bottom: 40px;
 }
+
+p {
+  margin: 15px 0;
+  font-size: 16px;
+}
+
+.quote {
+  font-style: italic;
+  margin-top: 30px;
+  opacity: 0.9;
+}
+
 button {
-  padding: 10px 20px;
-  background: white;
-  color: black;
-  border: none;
+  margin-top: 35px;
+  padding: 12px 28px;
+  background: transparent;
+  border: 1px solid #f5d67b;
+  color: #f5d67b;
+  font-size: 14px;
   cursor: pointer;
+  transition: 0.3s ease;
+}
+
+button:hover {
+  background: #f5d67b;
+  color: black;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
 
 <body>
 
+<div class="container">
+
 <h1>CODE: 2206</h1>
-<p class="small">Started 08.08 • Sealed 01.09</p>
+<div class="subtitle">Started 08.08 • Sealed 01.09</div>
 
-<div class="section">
-  <p>Access Granted</p>
-  <p>User: [Nome dele]</p>
+<p>Access Granted</p>
+<p>User: [Nome dele]</p>
+
+<p style="margin-top: 30px;">You’re my only.</p>
+
+<p style="margin-top: 30px;">
+Tudo começou no dia 08…<br>
+No dia 01, deixou de ser só isso.<br>
+E eu ainda escolho você.
+</p>
+
+<p class="quote">“Entre tantas pessoas… foi você.”</p>
+
+<button onclick="showMessage()">Continue</button>
+
 </div>
 
-<div class="section">
-  <p>You’re my only.</p>
-</div>
-
-<div class="section">
-  <p>Tudo começou no dia 08...</p>
-  <p>No dia 01, deixou de ser só isso.</p>
-  <p>E eu ainda escolho você.</p>
-</div>
-
-<div class="section">
-  <p>“Entre tantas pessoas… foi você.”</p>
-</div>
-
-<button onclick="alert('You’re still my favorite person.')">
-  Continue
-</button>
+<script>
+function showMessage() {
+  alert("A distância é temporária. O que eu sinto não é.");
+}
+</script>
 
 </body>
 </html>
