@@ -57,6 +57,8 @@ input {
   <button id="continueBtn" onclick="finalMessage()">Continue</button>
 </div>
 
+<audio id="nossaMusica" src="ONLY.mp3" loop></audio>
+  
 <script>
 function checkCode() {
   const code = document.getElementById("codeInput").value;
@@ -71,6 +73,8 @@ function checkCode() {
   }
 }
 
+  document.getElementById("nossaMusica").play();
+  
 const text = "Tudo começou no dia 8 de agosto.\nNosso primeiro beijo foi 1 de setembro.\nE desde então... você se tornou o meu lugar favorito no mundo.";
 let i = 0;
 
@@ -88,6 +92,7 @@ function typeWriter() {
 function finalMessage() {
   alert("A distância é temporária. O que eu sinto por você não é.");
 }
+  
 </script>
 
 </body>
