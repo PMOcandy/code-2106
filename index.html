@@ -130,16 +130,17 @@ function typeWriter() {
 }
 
 function finalMessage() {
-  document.body.innerHTML = `
-  <canvas id="stars"></canvas>
-  <div class="container">
-    <h1 style="font-size: 2em;">
-    A distância é temporária.<br><br>
-    O que eu sinto por você não é.
+
+  const secret = document.getElementById("secret");
+
+  secret.innerHTML = `
+    <h1 style="font-size: 2em; line-height: 1.6;">
+      A distância é temporária.<br><br>
+      O que eu sinto por você não é.
     </h1>
-  </div>
   `;
-}
+
+  }
 
 // ===== PARTÍCULAS =====
 const canvas = document.getElementById("stars");
