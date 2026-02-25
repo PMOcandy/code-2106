@@ -16,13 +16,21 @@ body {
   height: 100vh;
   flex-direction: column;
   text-align: center;
-  overflow: hidden;
 }
 
 #secret {
   display: none;
   opacity: 0;
   transition: opacity 2s ease;
+}
+
+#continueBtn {
+  display: none;
+  margin-top: 20px;
+  padding: 10px 25px;
+  background: white;
+  border: none;
+  cursor: pointer;
 }
 
 input {
@@ -32,14 +40,6 @@ input {
   color: white;
   text-align: center;
 }
-
-button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background: white;
-  border: none;
-  cursor: pointer;
-}
 </style>
 </head>
 
@@ -48,15 +48,14 @@ button {
 <div id="login">
   <h2>Digite o código</h2>
   <input type="password" id="codeInput">
-  <br>
+  <br><br>
   <button onclick="checkCode()">Entrar</button>
 </div>
 
 <div id="secret">
   <h1 id="message"></h1>
+  <button id="continueBtn" onclick="finalMessage()">Continue</button>
 </div>
-
-<audio id="bgMusic" src="ONLY.mp3" loop></audio>
 
 <script>
 function checkCode() {
@@ -65,13 +64,7 @@ function checkCode() {
     document.getElementById("login").style.display = "none";
     const secret = document.getElementById("secret");
     secret.style.display = "block";
-
-    setTimeout(() => {
-      secret.style.opacity = 1;
-    }, 100);
-
-    document.getElementById("bgMusic").play();
-
+    setTimeout(() => { secret.style.opacity = 1; }, 100);
     typeWriter();
   } else {
     alert("Código incorreto...");
@@ -83,10 +76,17 @@ let i = 0;
 
 function typeWriter() {
   if (i < text.length) {
-    document.getElementById("message").innerHTML += text.charAt(i) === "\n" ? "<br>" : text.charAt(i);
+    document.getElementById("message").innerHTML += 
+      text.charAt(i) === "\n" ? "<br>" : text.charAt(i);
     i++;
-    setTimeout(typeWriter, 60);
+    setTimeout(typeWriter, 50);
+  } else {
+    document.getElementById("continueBtn").style.display = "inline-block";
   }
+}
+
+function finalMessage() {
+  alert("A distância é temporária. O que eu sinto por você não é.");
 }
 </script>
 
