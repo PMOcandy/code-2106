@@ -31,6 +31,13 @@ canvas {
   text-align: center;
 }
 
+.section p {
+  position: absolute;
+  top: 20px;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
 #secret {
   display: none;
   opacity: 0;
@@ -68,9 +75,12 @@ button {
 
 <body>
 
-<canvas id="stars"></canvas>
+<canvas id="hearts"></canvas>
 
 <div class="container">
+<div class="section">
+
+<p>Para meu amor: Senhor Kaique Braz</p>
 
 <div id="login">
   <h2>Digite o código</h2>
@@ -85,6 +95,7 @@ button {
 </div>
 
 </div>
+</div>
 
 <audio id="bgMusic" preload="auto">
   <source src="ONLY.mp3" type="audio/mpeg">
@@ -92,7 +103,7 @@ button {
 
 <script>
 
-// ===== CÓDIGO SECRETO =====
+// ===== CÓDIGO =====
 function checkCode() {
   const code = document.getElementById("codeInput").value;
 
@@ -105,6 +116,7 @@ function checkCode() {
     setTimeout(() => { secret.style.opacity = 1; }, 100);
 
     const music = document.getElementById("bgMusic");
+    music.volume = 1;
     music.play().catch(() => {});
 
     typeWriter();
@@ -132,55 +144,76 @@ function typeWriter() {
 function finalMessage() {
 
   const secret = document.getElementById("secret");
+  const music = document.getElementById("bgMusic");
 
-  secret.innerHTML = `
-    <h1 style="font-size: 2em; line-height: 1.6;">
-      A distância é temporária.<br><br>
-      O que eu sinto por você não é.
-    </h1>
-  `;
+  // diminui música devagar
+  let fadeAudio = setInterval(() => {
+    if (music.volume > 0.05) {
+      music.volume -= 0.05;
+    } else {
+      clearInterval(fadeAudio);
+    }
+  }, 300);
 
-  }
+  secret.style.opacity = 0;
 
-// ===== PARTÍCULAS =====
-const canvas = document.getElementById("stars");
+  setTimeout(() => {
+    secret.innerHTML = `
+      <h1 style="font-size: 2em; line-height: 1.6; opacity: 0; transition: opacity 3s;">
+        A distância é temporária.<br><br>
+        O que eu sinto por você não é.
+      </h1>
+    `;
+    const newText = secret.querySelector("h1");
+    setTimeout(() => { newText.style.opacity = 1; }, 100);
+    secret.style.opacity = 1;
+  }, 2000);
+}
+
+// ===== CORAÇÕES =====
+const canvas = document.getElementById("hearts");
 const ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let stars = [];
+let hearts = [];
 
-for (let i = 0; i < 120; i++) {
-  stars.push({
+for (let i = 0; i < 50; i++) {
+  hearts.push({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
-    radius: Math.random() * 1.2,
-    speed: Math.random() * 0.5
+    size: Math.random() * 20 + 10,
+    speed: Math.random() * 1 + 0.5
   });
 }
 
-function animateStars() {
+function drawHeart(x, y, size) {
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.bezierCurveTo(x - size/2, y - size/2, x - size, y + size/3, x, y + size);
+  ctx.bezierCurveTo(x + size, y + size/3, x + size/2, y - size/2, x, y);
+  ctx.fillStyle = "rgba(255, 100, 150, 0.8)";
+  ctx.fill();
+}
+
+function animateHearts() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "white";
 
-  stars.forEach(star => {
-    ctx.beginPath();
-    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-    ctx.fill();
+  hearts.forEach(heart => {
+    drawHeart(heart.x, heart.y, heart.size);
+    heart.y -= heart.speed;
 
-    star.y += star.speed;
-
-    if (star.y > canvas.height) {
-      star.y = 0;
-      star.x = Math.random() * canvas.width;
+    if (heart.y < -20) {
+      heart.y = canvas.height + 20;
+      heart.x = Math.random() * canvas.width;
     }
   });
 
-  requestAnimationFrame(animateStars);
+  requestAnimationFrame(animateHearts);
 }
 
-animateStars();
+animateHearts();
 
 window.addEventListener("resize", () => {
   canvas.width = window.innerWidth;
