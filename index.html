@@ -1,104 +1,92 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>CODE 2206</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<title>2106</title>
 
 <style>
 body {
   margin: 0;
-  height: 100vh;
+  background: black;
+  color: white;
+  font-family: 'Courier New', monospace;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: radial-gradient(circle at center, #1a1a1a 0%, #0d0d0d 60%, #000 100%);
-  color: #f5d67b;
+  height: 100vh;
+  flex-direction: column;
   text-align: center;
-  font-family: 'Inter', sans-serif;
-  animation: fadeIn 2s ease-in;
+  overflow: hidden;
 }
 
-.container {
-  max-width: 600px;
-  padding: 40px;
+#secret {
+  display: none;
+  opacity: 0;
+  transition: opacity 2s ease;
 }
 
-h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 42px;
-  margin-bottom: 10px;
-  letter-spacing: 2px;
-}
-
-.subtitle {
-  font-size: 14px;
-  opacity: 0.7;
-  margin-bottom: 40px;
-}
-
-p {
-  margin: 15px 0;
-  font-size: 16px;
-}
-
-.quote {
-  font-style: italic;
-  margin-top: 30px;
-  opacity: 0.9;
+input {
+  padding: 10px;
+  background: black;
+  border: 1px solid white;
+  color: white;
+  text-align: center;
 }
 
 button {
-  margin-top: 35px;
-  padding: 12px 28px;
-  background: transparent;
-  border: 1px solid #f5d67b;
-  color: #f5d67b;
-  font-size: 14px;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background: white;
+  border: none;
   cursor: pointer;
-  transition: 0.3s ease;
-}
-
-button:hover {
-  background: #f5d67b;
-  color: black;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-
-<h1>CODE: 2106</h1>
-<div class="subtitle">Started 08.08 • Sealed 01.09</div>
-
-<p>Para meu amor: </p>
-<p>Senhor, Kaique Braz</p>
-
-<p style="margin-top: 30px;">You’re my only.</p>
-
-<p style="margin-top: 30px;">
-Tudo começou no dia 08…<br>
-No dia 01, deixou de ser só isso.<br>
-E eu ainda escolho você.
-</p>
-
-<p class="quote">“Entre tantas pessoas… foi você.”</p>
-
-<button onclick="showMessage()">Continue</button>
-
+<div id="login">
+  <h2>Digite o código</h2>
+  <input type="password" id="codeInput">
+  <br>
+  <button onclick="checkCode()">Entrar</button>
 </div>
 
+<div id="secret">
+  <h1 id="message"></h1>
+</div>
+
+<audio id="bgMusic" src="musica.mp3" loop></audio>
+
 <script>
-function showMessage() {
-  alert("A distância é temporária. O que eu sinto não é.");
+function checkCode() {
+  const code = document.getElementById("codeInput").value;
+  if(code === "2106") {
+    document.getElementById("login").style.display = "none";
+    const secret = document.getElementById("secret");
+    secret.style.display = "block";
+
+    setTimeout(() => {
+      secret.style.opacity = 1;
+    }, 100);
+
+    document.getElementById("bgMusic").play();
+
+    typeWriter();
+  } else {
+    alert("Código incorreto...");
+  }
+}
+
+const text = "Tudo começou no dia 8 de agosto.\nNosso primeiro beijo foi 1 de setembro.\nE desde então... você se tornou o meu lugar favorito no mundo.";
+let i = 0;
+
+function typeWriter() {
+  if (i < text.length) {
+    document.getElementById("message").innerHTML += text.charAt(i) === "\n" ? "<br>" : text.charAt(i);
+    i++;
+    setTimeout(typeWriter, 60);
+  }
 }
 </script>
 
