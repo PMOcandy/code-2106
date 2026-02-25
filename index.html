@@ -10,10 +10,23 @@ body {
   background: black;
   color: white;
   font-family: 'Courier New', monospace;
+  overflow: hidden;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   flex-direction: column;
   text-align: center;
 }
@@ -31,6 +44,7 @@ body {
   background: white;
   border: none;
   cursor: pointer;
+  font-family: inherit;
 }
 
 input {
@@ -39,11 +53,24 @@ input {
   border: 1px solid white;
   color: white;
   text-align: center;
+  font-family: inherit;
+}
+
+button {
+  padding: 10px 25px;
+  background: white;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
 }
 </style>
 </head>
 
 <body>
+
+<canvas id="stars"></canvas>
+
+<div class="container">
 
 <div id="login">
   <h2>Digite o código</h2>
@@ -57,24 +84,19 @@ input {
   <button id="continueBtn" onclick="finalMessage()">Continue</button>
 </div>
 
+</div>
+
 <audio id="bgMusic" preload="auto">
   <source src="ONLY.mp3" type="audio/mpeg">
 </audio>
-  
+
 <script>
+
+// ===== CÓDIGO SECRETO =====
 function checkCode() {
   const code = document.getElementById("codeInput").value;
 
   if(code === "2106") {
-
-    const music = document.getElementById("bgMusic");
-
-    // tenta tocar ANTES de esconder a tela
-    music.play().then(() => {
-      console.log("Tocando 💛");
-    }).catch(err => {
-      console.log("Erro ao tocar:", err);
-    });
 
     document.getElementById("login").style.display = "none";
 
@@ -82,14 +104,18 @@ function checkCode() {
     secret.style.display = "block";
     setTimeout(() => { secret.style.opacity = 1; }, 100);
 
+    const music = document.getElementById("bgMusic");
+    music.play().catch(() => {});
+
     typeWriter();
 
   } else {
     alert("Código incorreto...");
   }
 }
-  
-const text = "Tudo começou no dia 8 de agosto.\nNosso primeiro beijo foi 1 de setembro.\nE desde então... você se tornou o meu lugar favorito no mundo.";
+
+// ===== TEXTO =====
+const text = "Tudo começou no dia 8 de agosto.\nNosso primeiro beijo foi 1 de setembro.\nE desde então...\nvocê se tornou o meu lugar favorito no mundo.";
 let i = 0;
 
 function typeWriter() {
@@ -104,9 +130,62 @@ function typeWriter() {
 }
 
 function finalMessage() {
-  alert("A distância é temporária. O que eu sinto por você não é.");
+  document.body.innerHTML = `
+  <canvas id="stars"></canvas>
+  <div class="container">
+    <h1 style="font-size: 2em;">
+    A distância é temporária.<br><br>
+    O que eu sinto por você não é.
+    </h1>
+  </div>
+  `;
 }
-  
+
+// ===== PARTÍCULAS =====
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let stars = [];
+
+for (let i = 0; i < 120; i++) {
+  stars.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    radius: Math.random() * 1.2,
+    speed: Math.random() * 0.5
+  });
+}
+
+function animateStars() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "white";
+
+  stars.forEach(star => {
+    ctx.beginPath();
+    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+    ctx.fill();
+
+    star.y += star.speed;
+
+    if (star.y > canvas.height) {
+      star.y = 0;
+      star.x = Math.random() * canvas.width;
+    }
+  });
+
+  requestAnimationFrame(animateStars);
+}
+
+animateStars();
+
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
 </script>
 
 </body>
